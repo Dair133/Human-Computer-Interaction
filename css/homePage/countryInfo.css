@@ -1,0 +1,70 @@
+.countryInfo{
+    background-color: blue;
+     width: 45%;
+     height: 85vh;
+     float: left;
+
+    
+ }
+ .countryFlag{
+
+    height: 30vh;
+    width: 40vw;
+    display: flex; /* Add flex display */
+    justify-content: center; /* Center children horizontally */
+    align-items: center; /* Center children vertically */
+    /* Add if you want some padding inside the .countryFlag, remove if not necessary */
+    padding: 10px; 
+
+ }
+ .flagImage {
+    align-items: center;
+    max-width: 270px; /* maximum width of the image */
+    max-height: 180px; /* maximum height of the image */
+}
+ .countryDescription{
+
+    top:30vh;
+    text-align: center;
+ }
+
+ .overallScore{
+
+text-align: center;
+font-size: 24px;
+color:white;
+    
+ }
+.fullProfileLink a {
+    display: inline-block;
+    font-size: 24px;
+    position: relative;
+    top: 20vh;
+    text-align: center;
+    color: rgb(85, 255, 0);
+    padding: 10px 20px;
+    background-color: #007bff; /* Bootstrap primary button color for example */
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    text-decoration: none; /* Remove underline from links */
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+                border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.fullProfileLink a:hover, 
+.fullProfileLink a:focus {
+    color: #fff;
+    background-color: #0062cc;
+    border-color: #005cbf;
+    text-decoration: none; /* Remove underline from links on hover/focus */
+}
+
+.fullProfileLink a:active {
+    background-color: #005cbf;
+    border-color: #004085;
+}
+
+.fullProfileLink a:link, 
+.fullProfileLink a:visited {
+    /* Apply styles for link and visited state if needed */
+}

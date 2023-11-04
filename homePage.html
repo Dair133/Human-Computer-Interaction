@@ -1,1 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/body.css">
+    <link rel="stylesheet" href="css/homePage/regionAndCountriesList.css">
+    <link rel="stylesheet" href="css/homePage/countryInfo.css">
+    <link rel="stylesheet" href="css/news.css">
+    <title>HomePage for Human Computer Interaction</title>
+</head>
+<header class="headBar">
+    <div class="logo-container">Logo will go here</div>
 
+</header>
+<body class="bodyStyle">
+    <div class="regionAndCountriesList">
+        <div class="regionSelection">
+            Region Selection
+            <br>
+            <button class="regionButton" data-region="asia">Asia</button>
+            <button class="regionButton" data-region="africa">Africa</button>
+            <button class="regionButton" data-region="europe">Europe</button>
+            <button class="regionButton" data-region="northAmerica">North America</button>
+            <button class="regionButton" data-region="southAmerica">South America</button>
+            <button class="regionButton" data-region="oceania">Oceania</button>
+        </div>
+        
+        <div class="countrySelection">
+            Countries Selection
+
+            <ul id="country-list">
+                <!-- The list will be populated with buttons by JavaScript -->
+            </ul>
+        </div>
+    </div>
+
+    <div class="countryInfo">
+    <div class="countryFlag">
+        <img id="countryFlagImg"class=flagImage src="Images/Flags/" alt="Country Flag">
+    </div>
+    <div id="countryDescription" class="countryDescription">
+        <!-- Country information will be populated here by JavaScript -->
+    </div>
+    <br><br>
+    <div id="overallScore" class="overallScore">
+        <!-- Overall Safety Score will be populated here by JavaScript -->
+    </div>
+   
+    <div id="detailLink"  class="fullProfileLink" ">
+        <a id="countryProfileLink">Full Country Profile</a>
+    </div>
+</div>
+
+    <div class="generalNews">
+            This is where general news will appear for every country like a feed.(Articles, videos, etc.)
+    </div>
+
+    
+</body>
+<script>
+    // JavaScript to change the contents of the list to 10 European countries as buttons
+
+
+
+
+
+var asianCountres ="";
+var europeanCountries ="";
+var africanCountries ="";
+var northAmericanCountries ="";
+var southAmericanCountries ="";
+var oceaniaCountries ="";
+
+
+
+
+
+intialiseCountries();
+localStorage.setItem('asianCountries', JSON.stringify(asianCountries));
+localStorage.setItem('africanCountries', JSON.stringify(africanCountries))
+localStorage.setItem('europeanCountries', JSON.stringify(europeanCountries))
+
+// Modify your existing updateCountryList function
+function updateCountryList(countries) {
+    const listElement = document.getElementById('country-list');
+    listElement.innerHTML = ''; // Clear the current list
+
+    countries.forEach(countryObj => {
+        const listItem = document.createElement('li');
+        const button = document.createElement('button');
+        button.textContent = countryObj.name;
+        button.classList.add('country-button');
+
+        button.addEventListener('click', function() {
+           // Update the flag image
+           const flagImageElement = document.getElementById('countryFlagImg');
+            const infoElement = document.getElementById('countryDescription');
+            const overallScore = document.getElementById('overallScore');
+            
+
+
+
+            flagImageElement.src = countryObj.flagPath;
+            flagImageElement.alt = countryObj.name + ' Flag';
+
+            overallScore.textContent = 'Overall Safety Score: ' + countryObj.safetyScore;
+
+            // Update the country info
+            infoElement.textContent = countryObj.name + ': ' + countryObj.description + ' Located in: ' + countryObj.location;
+            const moreDetailsLink = document.getElementById('countryProfileLink');
+            moreDetailsLink.href = `countryDetails.html?country=${encodeURIComponent(countryObj.name)}`;
+        });
+
+        listItem.appendChild(button);
+        listElement.appendChild(listItem);
+    });
+}
+
+// ... rest of your existing JavaScript code ...
+
+// Update the event listeners for the region buttons to handle the new structure
+document.querySelectorAll('.regionButton').forEach(button => {
+    button.addEventListener('click', function() {
+        const region = button.getAttribute('data-region');
+        switch (region) {
+            case 'asia':
+                updateCountryList(asianCountries);
+                break;
+            // ... Handle other regions
+        }
+    });
+});
+
+// Example to initialize with Asian countries
+updateCountryList(asianCountries);
+
+
+
+
+// Add event listeners to the region buttons
+document.querySelector('.regionButton[data-region="asia"]').addEventListener('click', () => updateCountryList(asianCountries));
+document.querySelector('.regionButton[data-region="africa"]').addEventListener('click', () => updateCountryList(africanCountries));
+document.querySelector('.regionButton[data-region="europe"]').addEventListener('click', () => updateCountryList(europeanCountries));
+document.querySelector('.regionButton[data-region="northAmerica"]').addEventListener('click', () => updateCountryList(northAmericanCountries));
+document.querySelector('.regionButton[data-region="southAmerica"]').addEventListener('click', () => updateCountryList(southAmericanCountries));
+document.querySelector('.regionButton[data-region="oceania"]').addEventListener('click', () => updateCountryList(oceaniaCountries));
+
+// Initialize with the European countries
+updateCountryList(europeanCountries);
+function intialiseCountries(){
+    asianCountries = [
+  { 
+    name: 'China', 
+    description: 'China, the world’s most populous country, has a vast landscape that encompasses grassland, desert, mountains, lakes, rivers, and more than 14,000km of coastline. The political situation is stable, with a single-party system.',
+    location: 'East Asia', 
+    flagPath: 'Images/Flags/China.png',
+    safetyScore: '65',
+    numberOfArrestsPerYear: 5000,
+    numSTEMarrests: 300,
+    numArtistArrests: 200,
+    numHighRiskArrests: 100,
+    politicalStabilityRating: 6,
+    top3MostUnsafeAreas: 'Xinjiang, Tibet, Yunnan',
+    extraDescription: "China has a single-party state ruled by the Communist Party of China. The government"+
+                        "exerts substantial control over the country’s civil liberties, censorship, and economic "+
+                        "regulations. Dissent against the ruling party is often subject to censorship or legal "+
+                        "repercussions. The central government also maintains tight control over minority regions, "+
+                        "such as Xinjiang and Tibet, leading to international controversy regarding human rights. "+
+                        "Economically, China is a global powerhouse, with significant technological and military "+
+                        "investments driving its global influence."
+    
+  },
+  { 
+    name: 'India', 
+    description: 'India is known for its diverse culture, rich heritage, and a democratic system of governance. It generally maintains a stable political environment, though regional disturbances occur occasionally.',
+    location: 'South Asia', 
+    flagPath: 'Images/Flags/India.png',
+    safetyScore: '65',
+    numberOfArrestsPerYear: 4200,
+    numSTEMarrests: 250,
+    numArtistArrests: 150,
+    numHighRiskArrests: 80,
+    politicalStabilityRating: 7,
+    top3MostUnsafeAreas: 'Kashmir, Chhattisgarh, Manipur',
+    extraDescription: 'India operates as a parliamentary democracy with multiple parties representing the '+
+                        'country’s diverse population. Political power often shifts between the two major parties, '+
+                        'the Indian National Congress and the Bharatiya Janata Party. Despite its democratic framework, '+
+                        'India faces challenges of political corruption, regional separatism, and communal tensions. '+
+                        'Recent legislative changes in citizenship and autonomy of certain regions have sparked both '+
+                        'national and international debates. India continues to navigate complex relationships with '+
+                        'its neighbors, particularly Pakistan and China.'
+  },
+  { 
+    name: 'Indonesia', 
+    description: 'Indonesia, a Southeast Asian nation made up of thousands of volcanic islands, is home to hundreds of ethnic groups speaking many different languages. It is a democratic nation, with occasional political tensions and unrest.',
+    location: 'Southeast Asia', 
+    flagPath: 'Images/Flags/Indonesia.png',
+    safetyScore: '65',
+    numberOfArrestsPerYear: 2500,
+    numSTEMarrests: 120,
+    numArtistArrests: 90,
+    numHighRiskArrests: 50,
+    politicalStabilityRating: 5,
+    top3MostUnsafeAreas: 'Papua, Sulawesi, Kalimantan',
+    extraDescription: "Indonesia’s political system has transitioned significantly since the fall of Suharto’s "+
+                        "dictatorship, moving towards a more democratic system with direct presidential elections. "+
+                        "The nation faces challenges with corruption, religious and ethnic conflicts, and separatist "+
+                        "movements in regions such as Papua. Terrorism has also been a concern, with the government "+
+                        "actively working to address radicalism. Indonesia’s role in ASEAN and its strategic maritime "+
+                        "position make it an important player in regional politics."
+  },
+  { 
+    name: 'Thailand', 
+    description: 'Located in Southeast Asia, Thailand is known for tropical beaches, opulent royal palaces, ancient ruins and ornate temples. It has a constitutional monarchy, with a history of coups and military rule, but is currently stable.',
+    location: 'Southeast Asia', 
+    flagPath: 'Images/Flags/Thailand.png',
+    safetyScore: '65',
+    numberOfArrestsPerYear: 3100,
+    numSTEMarrests: 210,
+    numArtistArrests: 110,
+    numHighRiskArrests: 70,
+    politicalStabilityRating: 6,
+    top3MostUnsafeAreas: 'Yala, Pattani, Narathiwat',
+    "extraDescription": "Thailand’s politics have been characterized by instability and the interplay between "+
+                        "military leadership and civilian rule. The country has seen numerous coups, with the military "+
+                        "seizing control from civilian governments several times, most recently in 2014. While there "+
+                        "is a constitutional monarchy, the king’s role is largely ceremonial, though he is revered "+
+                        "amongst the populace. Political divisions between the urban elite and the rural poor continue "+
+                        "to shape Thai politics, with ongoing protests and calls for greater democracy."
+  }
+  
+];
+
+
+
+ africanCountries = [
+  { 
+    name: 'Nigeria', 
+    description: 'Nigeria is the most populous country in Africa, known for its diverse culture, ethnic groups, and resources. It is a federal republic with a presidential system, and its political situation can be dynamic with regional differences.',
+    location: 'West Africa', 
+    flagPath: 'Images/Flags/Nigeria.png',
+    safetyScore: '60',
+    relevantNews: 'placeholderNews'
+  },
+  { 
+    name: 'South Africa', 
+    description: 'South Africa is known for its varied topography, great natural beauty, and cultural diversity. It is a parliamentary republic with a three-capital system and is relatively stable politically.',
+    location: 'Southern Africa', 
+    flagPath: 'Images/Flags/SouthAfrica.png',
+    safetyScore: '65'
+  },
+
+  { 
+    name: 'Morocco', 
+    description: 'Located in North Africa, Morocco has a coast on the Atlantic Ocean that reaches past the Strait of Gibraltar into the Mediterranean Sea. It is a constitutional monarchy with an elected parliament and known for its culture, history, and cuisine.',
+    location: 'North Africa', 
+    flagPath: 'Images/Flags/Morocco.png',
+    safetyScore: '70'
+  }
+];
+
+europeanCountries = [
+  {
+    name: 'Ireland',
+    description: 'Ireland, an island nation located in the North Atlantic, is known for its lush landscapes, friendly people, and rich Celtic culture. It operates a parliamentary democracy and is generally politically stable.',
+    location: 'Northwest Europe',
+    flagPath: 'Images/Flags/Ireland.png',
+    numSTEMarrests: 5,
+    numArtistArrests: 2,
+    numHighRiskArrests: 3,
+    politicalStabilityRating: 'High',
+    safetyScore: '70',
+    relevantNews: 'placeholderNews',
+    extraDescription: "Ireland's economy has been dubbed the Celtic Tiger for its rapid growth in the late 20th century, though it has faced significant challenges during global economic crises."+
+    "The country's political landscape is shaped by its history of national identity, with a focus on preserving"+
+    "cultural heritage while fostering economic innovation. Ireland is grappling with issues such as housing shortages, healthcare reform"+ 
+    "and the implications of Brexit. Nonetheless, the nation maintains its reputation for a high quality of life, vibrant"+
+     "culture, and contributions to literature and music, deeply ingrained in the Irish ethos."
+  },
+  {
+    name: 'France',
+    description: 'France, famed for its fine dining, classical art museums, and medieval cities, is a key player on the global stage. It has a semi-presidential system and is recognized for its cultural influence and geopolitical importance.',
+    location: 'Western Europe',
+    flagPath: 'Images/Flags/France.png',
+    numSTEMarrests: 10,
+    numArtistArrests: 4,
+    numHighRiskArrests: 6,
+    politicalStabilityRating: 'Moderate',
+    safetyScore: '80',
+    extraDescription: "France's global cultural presence is reinforced by its significant contributions to art, literature, philosophy, and science." +
+    "The nation's historical legacy is visible in its architectural wonders, from the Gothic cathedrals to the châteaux of the Loire Valley."+
+    "While it enjoys a high standard of living and a strong influence in international affairs, France faces challenges in integrating its immigrant population, maintaining social cohesion, and dealing with the "+
+    " complexities of a multi-layered bureaucracy. The French government is actively involved in addressing environmental issues, with a "+
+    "strong commitment to reducing carbon emissions and promoting sustainable energy sources."
+  },
+  {
+    name: 'Hungary',
+    description: 'Hungary, with its rich history, is famous for its architectural landmarks and thermal spas. It is a parliamentary republic but has seen recent political trends towards centralization of power.',
+    location: 'Central Europe',
+    flagPath: 'Images/Flags/Hungary.png',
+    numSTEMarrests: 8,
+    numArtistArrests: 3,
+    numHighRiskArrests: 2,
+    politicalStabilityRating: 7,
+    safetyScore: '65',
+    extraDescription: "Hungary's rich cultural heritage is reflected in its classical music, folk traditions"+
+   " and vibrant art scene. The country's political trajectory has seen a shift towards national conservatism in recent years,"+
+   "raising debates over democratic norms and media freedom. Hungary's strategic location in Central Europe makes it a bridge between East and West, and it plays a critical role "+
+   "in regional economics and politics. The nation is renowned for its thermal baths, the scenic Danube river, and historic cities like Budapest, "+
+   " which stands as a testament to Hungary's storied past and dynamic present."
+  }
+];
+
+ northAmericanCountries = [
+  { 
+    name: 'United States', 
+    description: 'The United States of America is a federal republic consisting of 50 states and a federal district. Known for its economic and military power, cultural influence, and innovation, the U.S. has a stable political environment, although it experiences political divisions on various issues.',
+    location: 'North America', 
+    flagPath: 'Images/Flags/USA.png',
+    safetyScore: '75',
+    relevantNews: 'placeholderNews'
+  },
+  { 
+    name: 'Canada', 
+    description: 'Canada, the second-largest country in the world by land area, is known for its vast wilderness, multicultural cities, and bilingual (English-French) heritage. It is a parliamentary democracy and a constitutional monarchy, with a high level of political stability.',
+    location: 'North America', 
+    flagPath: 'Images/Flags/Canada.png',
+    safetyScore: '80'
+  },
+  { 
+    name: 'Mexico', 
+    description: 'Mexico is a country between the U.S. and Central America known for its Pacific and Gulf of Mexico beaches, diverse landscape of mountains, deserts, and jungles, and rich history, including ancient Maya cities. It is a federal republic with periodic political challenges.',
+    location: 'North America', 
+    flagPath: 'Images/Flags/Mexico.png',
+    safetyScore: '60'
+  },
+  { 
+    name: 'Guatemala', 
+    description: 'In Central America south of Mexico, Guatemala is known for its rich Mayan heritage, volcanoes, rainforests, and ancient ruins. It has a democratic system, but faces challenges like poverty, crime, and political instability.',
+    location: 'Central America', 
+    flagPath: 'Images/Flags/Guatemala.png',
+    safetyScore: '55'
+  },
+  { 
+    name: 'Panama', 
+    description: 'Panama is a country on the isthmus linking Central and South America. The Panama Canal, a famous feat of human engineering, cuts through its center, linking the Atlantic and Pacific oceans. It has a presidential representative democratic republic and is relatively stable politically.',
+    location: 'Central America', 
+    flagPath: 'Images/Flags/Panama.png',
+    safetyScore: '70'
+  }
+];
+
+southAmericanCountries = [
+  { 
+    name: 'Brazil', 
+    description: 'Brazil is the largest country in South America and the fifth-largest in the world, known for its football (soccer) tradition and its annual Carnaval in Rio de Janeiro, Salvador, Recife and Olinda. It is a culturally rich country with a growing economy.',
+    location: 'Eastern South America', 
+    flagPath: 'Images/Flags/Brazil.png',
+    safetyScore: '60',
+    relevantNews: 'placeholderNews'
+  },
+  { 
+    name: 'Argentina', 
+    description: 'Argentina is known for tango dance and music, its vast pampas grasslands, and beef consumption. Buenos Aires, the capital, is one of the most sophisticated cities in South America.',
+    location: 'Southern South America', 
+    flagPath: 'Images/Flags/Argentina.png',
+    safetyScore: '70'
+  },
+  { 
+    name: 'Colombia', 
+    description: 'Colombia is recognized for its coffee, the friendliness of its people, and the rhythm of salsa. It has a diverse geography that includes the Amazon rainforest and Andes mountains.',
+    location: 'Northwestern South America', 
+    flagPath: 'Images/Flags/Colombia.png',
+    safetyScore: '65'
+  },
+  { 
+    name: 'Venezuela', 
+    description: "Venezuela is rich in natural beauty and biodiversity, featuring attractions such as the Angel Falls, the world's highest uninterrupted waterfall, and the Orinoco Delta. It has faced political and economic challenges in recent years.",
+    location: 'Northern South America', 
+    flagPath: 'Images/Flags/Venezuela.png',
+    safetyScore: '50'
+  },
+  { 
+    name: 'Peru', 
+    description: 'Peru is known for its ancient Incan city of Machu Picchu, the mysterious Nazca Lines, and its part of the Amazon rainforest. It has a rich cultural heritage from pre-Columbian times to the colonial period.',
+    location: 'Western South America', 
+    flagPath: 'Images/Flags/Peru.png',
+    safetyScore: '65'
+  }
+];
+ oceaniaCountries = [
+  { 
+    name: 'Australia', 
+    description: 'Australia is a highly developed country known for its Sydney Opera House, Great Barrier Reef, vast interior desert wilderness called the Outback, and unique animal species like kangaroos and duck-billed platypuses.',
+    location: 'Australasia', 
+    flagPath: 'Images/Flags/Australia.png',
+    safetyScore: '85',
+    relevantNews: 'placeholderNews'
+  },
+  { 
+    name: 'Papua New Guinea', 
+    description: 'Papua New Guinea is known for its cultural and biological diversity. With hundreds of ethnic groups indigenous to the island, it also has one of the most rural populations, with only 18% living in urban centres.',
+    location: 'Melanesia', 
+    flagPath: 'Images/Flags/PapuaNewGuinea.png',
+    safetyScore: '50'
+  },
+  { 
+    name: 'New Zealand', 
+    description: 'New Zealand is famous for its indigenous Maori culture and its picturesque landscapes, as showcased in the "Lord of the Rings" film series. Its government system is a parliamentary democracy.',
+    location: 'Australasia', 
+    flagPath: 'Images/Flags/NewZealand.png',
+    safetyScore: '90'
+  },
+  { 
+    name: 'Fiji', 
+    description: "Fiji is an archipelago known for its tropical beaches, coral reefs with clear lagoons, and rugged landscapes. Tourism is a major part of its economy, and it's celebrated for its vibrant culture and friendly locals.",
+    location: 'Melanesia',
+    flagPath: 'Images/Flags/Fiji.png',
+    safetyScore: '70'
+  },
+  { 
+    name: 'Solomon Islands', 
+    description: 'The Solomon Islands, a nation of hundreds of islands in the South Pacific, has a diverse culture, with Melanesian, Micronesian, and Polynesian communities. It is known for its WWII-era relics, coral atolls, and vibrant marine life.',
+    location: 'Melanesia', 
+    flagPath: 'Images/Flags/SolomonIslands.png',
+    safetyScore: '60'
+  }
+];
+
+
+}
+
+
+
+</script>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/body.css">
+
+ 
+    <link rel="stylesheet" href="css/countryProfile/countryProfile.css">
+    <link rel="stylesheet" href="css/news.css">
+    <title>Country Details</title>
+</head>
+<body class="bodyStyle">
+
+    <header class="headBar">
+        <div class="logo-container">Logo will go here</div>
+    
+    </header>
+    <div class="statisticsSection" id="statistics">
+
+        <h1>Statistics(Per Year)</h1>
+        <div class="statisticHeading">Total Number of Arrests</div>
+        <div class="statistic" id="arrests"></div>
+        <br>
+        <br>
+        <div class="statisticHeading">Total Number of STEM Arrests</div>
+        <div class="statistic"  id="STEMarrests"></div>
+        <br>
+        <br>
+        <div class="statisticHeading">Total Number of Artist Arrests</div>
+        <div class="statistic" id=artistArrests></div>
+        <br>
+        <br>
+        <div class="statisticHeading">Total Number of High Risk Profession Arrests</div>
+        <div class="statistic"  id=highRiskArrests></div>
+        <br>
+        <br>
+        <div class="statisticHeading">Political Stability Score</div>
+        <div class="statistic"  id=politicalStability></div>
+    </div>
+   
+
+    </div>
+    <img src="" alt="Country Flag" id="countryFlag" class="flagImage">
+
+ <div id="countryDetails" class="countryDetails">
+        <h1 id="countryName">
+        
+
+        </h1>
+        
+        <h2>Description</h2>
+        <p id="description">
+
+        </p>
+        <h3>Location</h3>
+        <p id="location">
+
+        </p>
+ </div>
+ <div id="news" class="generalNews">
+NEWS
+ </div>
+    
+    <script>
+        window.onload = function() {
+            function getQueryParam(param) {
+                var searchParams = new URLSearchParams(window.location.search);
+                return searchParams.get(param);
+            }
+
+            var countryName = getQueryParam('country');
+            
+            // Retrieve country details from local storage
+            var asianCountries = JSON.parse(localStorage.getItem('asianCountries'));
+            var africanCountries = JSON.parse(localStorage.getItem('africanCountries'));
+            var europeanCountries = JSON.parse(localStorage.getItem('europeanCountries'));
+    
+            
+            // Find the country object by its name
+                if(africanCountries.find(country => country.name === countryName))
+                 var countryDetails = africanCountries.find(country => country.name === countryName);
+
+
+                if(asianCountries.find(country => country.name === countryName))
+                 countryDetails = asianCountries.find(country => country.name === countryName);
+
+                if(europeanCountries.find(country => country.name === countryName))
+                 countryDetails = europeanCountries.find(country => country.name === countryName);
+            
+      
+          
+            
+            
+            if (countryDetails) {
+                // Update the flag, title, and details with country details
+                document.getElementById('countryFlag').src = countryDetails.flagPath;
+           
+                console.log(document.getElementById('countryFlag').src)
+                document.getElementById('countryName').textContent = countryName;
+                document.title = countryName + ' Details'; // Change the page title
+
+                document.getElementById('arrests').innerHTML = countryDetails.numSTEMarrests + countryDetails.numArtistArrests + countryDetails.numHighRiskArrests;
+                document.getElementById('STEMarrests').innerHTML = countryDetails.numSTEMarrests;
+                document.getElementById('artistArrests').innerHTML = countryDetails.numArtistArrests;
+                document.getElementById('highRiskArrests').innerHTML = countryDetails.numHighRiskArrests;
+                document.getElementById('politicalStability').innerHTML = countryDetails.politicalStabilityRating;
+             
+
+                // Assuming you have other details you want to display
+           
+                document.getElementById('description').textContent = countryDetails.description + "\n\n" + countryDetails.extraDescription;
+                document.getElementById('location').textContent += "\n\n"+countryDetails.location;
+
+               
+            } else {
+                document.getElementById('countryDetails').textContent = 'Country details not found.';
+            }
+        };
+    </script>
+</body>
+</html>

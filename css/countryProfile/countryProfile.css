@@ -1,0 +1,30 @@
+.statisticsSection{
+
+    background-color: rgb(148, 148, 154);
+    width: 20%;
+    height: 85vh;
+    float: left;
+}
+
+.flagImage{
+
+position:absolute;
+left:40vw;
+top:18vh;
+max-width: 100px; /* maximum width of the image */
+max-height: 100px; /* maximum height of the image */
+
+}
+
+.statistic{
+    font-size: 20px;
+}
+.statisticHeading{
+    font-size:22px
+}
+
+.countryDetails{
+float: left;
+width: 50%;
+
+}
