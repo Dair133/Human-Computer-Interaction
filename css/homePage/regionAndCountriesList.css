@@ -8,60 +8,78 @@
     height: 85vh;
         
 }
-.regionButton{
 
-
-    background: #5E5DF0;
-    border-radius: 999px;
-    box-shadow: #5E5DF0 0 10px 20px -10px;
-    box-sizing: border-box;
-    color: #FFFFFF;
-    cursor: pointer;
-    font-family: Inter,Helvetica,"Apple Color Emoji","Segoe UI Emoji",NotoColorEmoji,"Noto Color Emoji","Segoe UI Symbol","Android Emoji",EmojiSymbols,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans",sans-serif;
-    font-size: 12px;
-    font-weight: 700;
-    line-height: 24px;
-    opacity: 1;
-    outline: 0 solid transparent;
-    padding: 6px 12px;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    width: fit-content;
-    word-break: break-word;
-    border: 0;
-    float: left;
-
-
-}
 .regionSelection{
     text-align: center;
-    color: white;
+    color: #000000;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 24px; /* or any other value you prefer */
-    height: 15.5vh;
-    background-color: darkred;
+    height: 25vh;
+    background-color: #ececec;
 }
-.countrySelection{
-background-color: purple;
-color:white;
-text-align: center;
-font-size:24px;
-position: relative;
-flex-grow: 1;
+.countrySelection {
+    background-color: #fff;
+    color: #000000;
+    text-align: center;
+    font-size: 24px;
+    position: relative;
+    flex-grow: 1;
+}
+#country-list {
+    list-style-type: none;
+    padding: 0; /* Removes default padding */
+}
 
-}
+/* Style for the country buttons */
 .country-button {
-    display: block; /* Make the button widen to full width of li */
-    width: 100%; /* Optional: In case you want the button to fill the li */
-    padding: 5px 10px; /* Some padding */
-    text-align: left; /* Align the text to the left */
-    border: none; /* Remove border */
-    background-color: transparent; /* Transparent background */
-    cursor: pointer; /* Cursor becomes pointer on hover */
-    color:darkorange
+    display: block;
+    width: 100%; /* Full width of the list */
+    padding: 8px 15px; /* Slightly less padding than region buttons */
+    text-align: center; /* Text aligned to the left */
+    background-color: #f5f5f5; /* Light grey background */
+    color: #333; /* Darker text for contrast */
+    border: 1px solid #ddd; /* Subtle border */
+    border-radius: 3px; /* Less rounded corners than region buttons */
+    cursor: pointer; /* Cursor changes to indicate it's clickable */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effect */
+    margin-bottom: 5px; /* Margin at the bottom of each button */
 }
 
+/* Hover effect for country buttons */
 .country-button:hover {
-    background-color: #e0e0e0; /* Change background on hover */
+    background-color: #e6e6e6; /* Slightly darker grey on hover */
+    color: black; /* Black text on hover */
+}
+
+/* Focus style for country buttons for accessibility */
+.country-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #999; /* Grey outline to indicate focus */
+}
+
+
+/* Basic styling for region buttons */
+.regionButton {
+    padding: 10px 20px; /* Adequate padding for better clickability */
+    background-color: black; /* Black background for a sleek look */
+    color: white; /* White text for high contrast */
+    border: 2px solid white; /* White border for added style */
+    border-radius: 5px; /* Slightly rounded corners for a modern look */
+    font-size: 16px; /* Legible font size */
+    cursor: pointer; /* Cursor changes to indicate clickable button */
+    margin: 5px; /* Space between buttons */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effect */
+}
+
+/* Hover effect for region buttons */
+.regionButton:hover {
+    background-color: white; /* White background on hover */
+    color: black; /* Black text on hover */
+    border-color: black; /* Black border on hover */
+}
+
+/* Focus style for accessibility */
+.regionButton:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #333; /* Dark grey outline to indicate focus */
 }

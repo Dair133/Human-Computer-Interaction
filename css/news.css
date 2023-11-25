@@ -1,8 +1,71 @@
 
 .generalNews{
     color:wheat;
-    background-color: aqua;
+    background-color: #ffffff;
     float: left;
     width: 30%;
-    height: 85vh;
+    max-height: 85vh;
+    overflow-y: auto;
+}
+
+.generalNews .news-article {
+    background-color: white; /* Set the background color of each article to white */
+    border-bottom: 1px solid black; /* Add a black line between articles */
+    padding: 15px; /* Add some padding for spacing inside each article */
+    margin-bottom: 10px; /* Add a little space between articles */
+}
+
+.generalNews .news-article:last-child {
+    border-bottom: none; /* Remove the border from the last article */
+}
+
+.news-article {
+    display: flex;
+    align-items: center;
+    background-color: #f5f5f5; /* Light background for the article */
+    margin-bottom: 15px; /* Gap between articles */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow to distinguish articles */
+    border: 1px solid #ddd; /* Light border for definition */
+}
+
+.article-content {
+    padding: 15px;
+    flex-grow: 1; /* Allows the content area to take up the remaining space */
+}
+
+.article-title {
+    margin-top: 0;
+    color: #333; /* Dark color for the title */
+    font-size: 20px; /* Adjust title size as needed */
+}
+
+.article-description {
+    margin-bottom: 0;
+    color: #666; /* Slightly lighter color for the description */
+}
+
+.article-image-container {
+    width: 30%; /* Adjust image width as per your design */
+}
+
+.article-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover; /* Ensures the image covers the container */
+}
+
+.generalNews::-webkit-scrollbar {
+    width: 10px; /* Width of the scrollbar */
+}
+
+.generalNews::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Color of the track (scrollbar background) */
+}
+
+.generalNews::-webkit-scrollbar-thumb {
+    background: black; /* Color of the scrollbar thumb (the part that's draggable) */
+}
+
+.generalNews::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Color when hovering over the scrollbar thumb */
 }

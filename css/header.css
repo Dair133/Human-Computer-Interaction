@@ -5,15 +5,51 @@
 .logo-container{
 
     width: 8vw;
-    height: 15vh;
+    min-height: 15vh;
+    max-height: 15vh;
     src: url(../images/logo.png);
-    background-color: aqua;
+    background-color: #ffffff;
     margin:0;
     padding:0;
 }
 
-.headBar{
-    background-color: rgb(0, 255, 76);
-   
+.logo-text {
+    width: 92vw;
+}
+
+.headBar {
+    display: grid;
+    grid-template-columns: auto 1fr; /* Adjust this as needed */
+    align-items: center; /* Align items vertically */
+    /* Add other styling (padding, background, etc.) */
+
+}
+
+
+
+.headBar h1 {
+    font-family: 'Arial', sans-serif; /* Choose a blocky, sans-serif font */
+    font-size: 36px; /* Adjust the size as needed */
+    text-transform: uppercase; /* Optional: makes text uppercase */
+    margin: 0;
+}
+
+.first-word {
+    color: white;
+    -webkit-text-stroke: 1px black; /* Text outline for webkit browsers */
+    text-stroke: 1px black; /* Text outline (not widely supported) */
+    font-weight: bold; /* Makes the font bold */
+}
+
+.second-word {
+    color: black;
+    font-weight: bold; /* Makes the font bold */
+}
+
+.logo-text {
+    display: flex; /* Use flexbox for alignment */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    text-align: center;
 }
 

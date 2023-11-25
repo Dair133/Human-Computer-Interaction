@@ -11,12 +11,22 @@
     <link rel="stylesheet" href="css/news.css">
     <title>Country Details</title>
 </head>
-<body class="bodyStyle">
+<body class="bodyStyle"
+    style="background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;">
 
-    <header class="headBar">
-        <div class="logo-container">Logo will go here</div>
-    
-    </header>
+<header class="headBar">
+    <div class="logo-container">
+        <img src="/Images/ArticleImages/logosecurity.png" height="100vh">
+    </div>
+    <div class="logo-text">
+        <h1 class="brandText">
+            <span class="first-word">Rakeesh</span>
+            <span class="second-word">Industries Inc.</span>
+        </h1>
+    </div>
+</header>
     <div class="statisticsSection" id="statistics">
 
         <h1>Statistics(Per Year)</h1>
@@ -60,7 +70,7 @@
         </p>
  </div>
  <div id="news" class="generalNews">
-NEWS
+
  </div>
     
     <script>
@@ -88,8 +98,8 @@ NEWS
 
                 if(europeanCountries.find(country => country.name === countryName))
                  countryDetails = europeanCountries.find(country => country.name === countryName);
-            
-      
+
+
           
             
             
@@ -113,11 +123,59 @@ NEWS
                 document.getElementById('description').textContent = countryDetails.description + "\n\n" + countryDetails.extraDescription;
                 document.getElementById('location').textContent += "\n\n"+countryDetails.location;
 
-               
+                const countryBackgrounds = {
+                    'Ireland': '/Images/ArticleImages/ie-01.png',
+                    'France': 'Images/ArticleImages/fr-01.png',
+                    'Hungary': 'Images/ArticleImages/hu-01.png',
+                };
+
+                document.body.style.backgroundImage = `url('${countryBackgrounds[countryName] || 'default-background.jpg'}')`;
+
+                // Update articles
+                updateArticles(countryName);
             } else {
                 document.getElementById('countryDetails').textContent = 'Country details not found.';
             }
         };
+
+        const countryArticles = {
+            'Ireland': [
+                { title: 'Article 1 for Ireland', description: 'Description 1', imageUrl: '/Images/ArticleImages/India.png' },
+                { title: 'Article 2 for Ireland', description: 'Description 2', imageUrl: '/Images/ArticleImages/India.png' },
+
+            ],
+            'France': [
+                { title: 'Article 1 for France', description: 'Description 1', imageUrl: '/Images/ArticleImages/India.png' },
+
+            ],
+            'Hungary': [
+                { title: 'Article 1 for Hungary', description: 'Description 1', imageUrl: '/Images/ArticleImages/India.png' },
+                { title: 'Article 2 for Hungary', description: 'Description 2', imageUrl: '/Images/ArticleImages/India.png' },
+                { title: 'Article 3 for Hungary', description: 'Description 2', imageUrl: '/Images/ArticleImages/India.png' },
+
+            ],
+        };
+
+        function updateArticles(countryName) {
+            const articles = countryArticles[countryName] || []; // Assuming you have a similar structure for articles
+            const newsContainer = document.getElementById('news');
+            newsContainer.innerHTML = ''; // Clear existing articles
+
+            articles.forEach(article => {
+                const articleDiv = document.createElement('div');
+                articleDiv.className = 'news-article';
+                articleDiv.innerHTML = `
+            <div class="article-content">
+                <h3 class="article-title">${article.title}</h3>
+                <p class="article-description">${article.description}</p>
+            </div>
+            <div class="article-image-container">
+                <img src="${article.imageUrl}" alt="Article Image" class="article-image">
+            </div>
+        `;
+                newsContainer.appendChild(articleDiv);
+            });
+        }
     </script>
 </body>
 </html>
