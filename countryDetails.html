@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/body.css">
 
- 
+
     <link rel="stylesheet" href="css/countryProfile/countryProfile.css">
     <link rel="stylesheet" href="css/news.css">
     <title>Country Details</title>
@@ -22,46 +22,59 @@
     </div>
     <div class="logo-text">
         <h1 class="brandText">
-            <span class="first-word">Rakeesh</span>
-            <span class="second-word">Industries Inc.</span>
+            <span class="first-word">NATION</span>
+            <span class="second-word">WATCH</span>
         </h1>
     </div>
 </header>
-    <div class="statisticsSection" id="statistics">
-
-        <h1>Statistics(Per Year)</h1>
-        <div class="statisticHeading">Total Number of Arrests</div>
-        <div class="statistic" id="arrests"></div>
-        <br>
-        <br>
-        <div class="statisticHeading">Total Number of STEM Arrests</div>
-        <div class="statistic"  id="STEMarrests"></div>
-        <br>
-        <br>
-        <div class="statisticHeading">Total Number of Artist Arrests</div>
-        <div class="statistic" id=artistArrests></div>
-        <br>
-        <br>
-        <div class="statisticHeading">Total Number of High Risk Profession Arrests</div>
-        <div class="statistic"  id=highRiskArrests></div>
-        <br>
-        <br>
-        <div class="statisticHeading">Political Stability Score</div>
-        <div class="statistic"  id=politicalStability></div>
+<div class="statisticsSection" id="statistics">
+    <div class="professionDropdown">
+        <label for="professionSelect">Profession Selection</label>
+        <select class="professionSelect" id="professionSelect" onchange="updateStatistics()">
+            <option value="healthcare">Healthcare Professional</option>
+            <option value="it">IT Specialist</option>
+            <option value="education">Educator</option>
+            <option value="engineering">Engineer</option>
+            <option value="finance">Finance Professional</option>
+            <option value="arts">Artist</option>
+            <option value="law">Legal Professional</option>
+            <option value="sales">Sales Professional</option>
+            <option value="construction">Construction Worker</option>
+            <option value="service">Service Industry Worker</option>
+        </select>
     </div>
-   
+    <br><br>
 
-    </div>
+    <div class="statisticHeading">Total Number of Political Arrests for this Profession</div>
+    <div class="statistic" id="arrests"></div>
+    <br><br>
+
+    <div class="statisticHeading">Total Number of Strikes</div>
+    <div class="statistic" id="strikes"></div>
+    <br><br>
+
+    <div class="statisticHeading">Total Number of Workplace Safety Violations</div>
+    <div class="statistic" id="safetyViolations"></div>
+    <br><br>
+
+    <div class="statisticHeading">Most Unsafe Areas</div>
+    <div class="statistic" id="unsafeAreas"></div>
+    <br><br>
+
+    <div class="statisticHeading">Political Stability Score</div>
+    <div class="statistic" id="politicalStability"></div>
+</div>
+
     <img src="" alt="Country Flag" id="countryFlag" class="flagImage">
 
  <div id="countryDetails" class="countryDetails">
         <h1 id="countryName">
-        
+
 
         </h1>
-        
+
         <h2>Description</h2>
-        <p id="description">
+        <p id="description" style="background-color: white">
 
         </p>
         <h3>Location</h3>
@@ -72,7 +85,7 @@
  <div id="news" class="generalNews">
 
  </div>
-    
+
     <script>
         window.onload = function() {
             function getQueryParam(param) {
@@ -81,52 +94,82 @@
             }
 
             var countryName = getQueryParam('country');
-            
+
             // Retrieve country details from local storage
             var asianCountries = JSON.parse(localStorage.getItem('asianCountries'));
             var africanCountries = JSON.parse(localStorage.getItem('africanCountries'));
             var europeanCountries = JSON.parse(localStorage.getItem('europeanCountries'));
-    
-            
+            var northAmericanCountries = JSON.parse(localStorage.getItem('northAmericanCountries'));
+            var southAmericanCountries = JSON.parse(localStorage.getItem('southAmericanCountries'));
+            var oceaniaCountries = JSON.parse(localStorage.getItem('oceaniaCountries'));
+
+
             // Find the country object by its name
-                if(africanCountries.find(country => country.name === countryName))
-                 var countryDetails = africanCountries.find(country => country.name === countryName);
+            if(africanCountries.find(country => country.name === countryName))
+                var countryDetails = africanCountries.find(country => country.name === countryName);
+
+            if(asianCountries.find(country => country.name === countryName))
+                countryDetails = asianCountries.find(country => country.name === countryName);
+
+            if(europeanCountries.find(country => country.name === countryName))
+                countryDetails = europeanCountries.find(country => country.name === countryName);
+
+            if(northAmericanCountries.find(country => country.name === countryName))
+                countryDetails = northAmericanCountries.find(country => country.name === countryName);
+
+            if(southAmericanCountries.find(country => country.name === countryName))
+                countryDetails = southAmericanCountries.find(country => country.name === countryName);
+
+            if(oceaniaCountries.find(country => country.name === countryName))
+                countryDetails = oceaniaCountries.find(country => country.name === countryName);
 
 
-                if(asianCountries.find(country => country.name === countryName))
-                 countryDetails = asianCountries.find(country => country.name === countryName);
-
-                if(europeanCountries.find(country => country.name === countryName))
-                 countryDetails = europeanCountries.find(country => country.name === countryName);
 
 
-          
-            
-            
+
             if (countryDetails) {
                 // Update the flag, title, and details with country details
                 document.getElementById('countryFlag').src = countryDetails.flagPath;
-           
+
                 console.log(document.getElementById('countryFlag').src)
                 document.getElementById('countryName').textContent = countryName;
                 document.title = countryName + ' Details'; // Change the page title
+                document.getElementById('unsafeAreas').textContent = countryDetails.top3MostUnsafeAreas;
 
-                document.getElementById('arrests').innerHTML = countryDetails.numSTEMarrests + countryDetails.numArtistArrests + countryDetails.numHighRiskArrests;
-                document.getElementById('STEMarrests').innerHTML = countryDetails.numSTEMarrests;
-                document.getElementById('artistArrests').innerHTML = countryDetails.numArtistArrests;
-                document.getElementById('highRiskArrests').innerHTML = countryDetails.numHighRiskArrests;
-                document.getElementById('politicalStability').innerHTML = countryDetails.politicalStabilityRating;
-             
+                updateStatistics()
+
 
                 // Assuming you have other details you want to display
-           
+
                 document.getElementById('description').textContent = countryDetails.description + "\n\n" + countryDetails.extraDescription;
                 document.getElementById('location').textContent += "\n\n"+countryDetails.location;
 
                 const countryBackgrounds = {
-                    'Ireland': '/Images/ArticleImages/ie-01.png',
+                    'Ireland': 'Images/ArticleImages/ie-01.png',
                     'France': 'Images/ArticleImages/fr-01.png',
                     'Hungary': 'Images/ArticleImages/hu-01.png',
+                    'Venezuela': 'Images/ArticleImages/ve-01.png',
+                    'Brazil': 'Images/ArticleImages/br-01.png',
+                    'Peru': 'Images/ArticleImages/pe-01.png',
+                    'Colombia': 'Images/ArticleImages/co-01.png',
+                    'Argentina': 'Images/ArticleImages/ar-01.png',
+                    'Nigeria': 'Images/ArticleImages/ng-01.png',
+                    'South Africa': 'Images/ArticleImages/za-01.png',
+                    'Morocco': 'Images/ArticleImages/ma-01.png',
+                    'China': 'Images/ArticleImages/cn-01.png',
+                    'India': 'Images/ArticleImages/in-01.png',
+                    'Indonesia': 'Images/ArticleImages/id-01.png',
+                    'Thailand': 'Images/ArticleImages/th-01.png',
+                    'United States': 'Images/ArticleImages/us-01.png',
+                    'Canada': 'Images/ArticleImages/ca-01.png',
+                    'Mexico': 'Images/ArticleImages/mx-01.png',
+                    'Guatemala': 'Images/ArticleImages/gt-01.png',
+                    'Panama': 'Images/ArticleImages/pa-01.png',
+                    'Australia': 'Images/ArticleImages/au-01.png',
+                    'Papua New Guinea': 'Images/ArticleImages/pg-01.png',
+                    'New Zealand': 'Images/ArticleImages/nz-01.png',
+                    'Fiji': 'Images/ArticleImages/fj-01.png',
+                    'Solomon Islands': 'Images/ArticleImages/sb-01.png',
                 };
 
                 document.body.style.backgroundImage = `url('${countryBackgrounds[countryName] || 'default-background.jpg'}')`;
@@ -140,19 +183,105 @@
 
         const countryArticles = {
             'Ireland': [
-                { title: 'Article 1 for Ireland', description: 'Description 1', imageUrl: '/Images/ArticleImages/India.png' },
-                { title: 'Article 2 for Ireland', description: 'Description 2', imageUrl: '/Images/ArticleImages/India.png' },
-
+                { title: 'Former journalist Gemma O’Doherty claims she was assaulted by garda when she was arrested during Covid-19 protest, judge hears', description: 'Gemma O’Doherty appeared before Bray District Court in relation to the incident in Kilmacangoue, Co Wicklow, on August 28', imageUrl: '/Images/ArticleImages/India.png', hyperlink: 'https://www.irishmirror.ie/news/irish-news/former-journalist-gemma-odoherty-claims-23167785' },
+                { title: 'Lyra McKee: four men arrested over killing of journalist in Derry', description: 'Police Service of Northern Ireland says the men have been detained under the Terrorism Act', imageUrl: '/Images/ArticleImages/India.png', hyperlink: 'https://www.theguardian.com/uk-news/2021/sep/15/lyra-mckee-four-men-arrested-over-killing-of-journalist-in-derry' },
+                { title: 'Man awarded €1.1m for wrongful arrest by gardaí over attack on fiancee', description: 'Another man was later jailed for seven years for 2012 assault in Carlow town', imageUrl: '/Images/ArticleImages/India.png', hyperlink: 'https://www.irishtimes.com/news/crime-and-law/courts/high-court/man-awarded-1-1m-for-wrongful-arrest-by-gardai-over-attack-on-fiancee-1.3970801' },
+                { title: 'Gardaí settle court case over man\'s false arrest due to mistaken identity', description: 'A judge and jury heard Mr Fitzpatrick was a completely innocent party who gardaí believed fit the description of an armed robber when he was arrested while walking on a street in Finglas on January 15th, 2015.', imageUrl: '', hyperlink: 'https://www.breakingnews.ie/ireland/gardai-settle-court-case-over-mans-false-arrest-due-to-mistaken-identity-1300510.html' },
             ],
             'France': [
-                { title: 'Article 1 for France', description: 'Description 1', imageUrl: '/Images/ArticleImages/India.png' },
+                { title: 'France riots: Minister deploys 45,000 police amid riots', description: 'France\'s interior minister said on Friday the coming hours would be decisive as he sent 45,000 police onto the streets following three nights of riots since an officer shot dead a teenager at a traffic stop in a working class suburb of Paris.', imageUrl: '/Images/ArticleImages/India.png', hyperlink: 'https://www.reuters.com/world/europe/frances-macron-hold-new-crisis-meeting-after-third-night-riots-2023-06-30/' },
 
             ],
             'Hungary': [
-                { title: 'Article 1 for Hungary', description: 'Description 1', imageUrl: '/Images/ArticleImages/India.png' },
-                { title: 'Article 2 for Hungary', description: 'Description 2', imageUrl: '/Images/ArticleImages/India.png' },
-                { title: 'Article 3 for Hungary', description: 'Description 2', imageUrl: '/Images/ArticleImages/India.png' },
+                { title: 'Two People in Hungary Detained for Their Political Views', description: 'Hungarian police detained two people for posting their views on Facebook after Viktor Orbán\'s government passed a law restricting the rules on spreading fake news, claiming it was necessary to protect against the pandemic.', imageUrl: '/Images/ArticleImages/India.png', hyperlink: 'https://www.liberties.eu/en/stories/two-people-in-hungary-detained-for-their-political-views/18625' },
+                { title: 'Orbán accused of trying to silence all critics in Hungary with new law', description: 'Proposed law to create ‘sovereignty protection office’ is designed to undermine opponents, civil society groups warn', imageUrl: '/Images/ArticleImages/India.png', hyperlink: 'https://www.theguardian.com/world/2023/nov/23/orban-accused-of-trying-to-silence-all-critics-in-hungary-with-new-law' },
 
+            ],
+            'Brazil': [
+                { title: 'Brazil prosecutors charge three suspects in murder of British journalist, Indigenous activist', description: ' Public prosecutors have charged three individuals with the June murder of British journalist Dom Phillips and Indigenous expert Bruno Pereira in the remote western reaches of Brazil’s Amazon rainforest, according to a statement.', imageUrl: '/Images/ArticleImages/India.png', hyperlink: 'https://www.pbs.org/newshour/world/brazil-prosecutors-charge-three-suspects-in-murder-of-british-journalist-indigenous-activist' },
+
+            ],
+            'Argentina': [
+                { title: 'Corrientes journalist who denounced police abuses found ‘beaten and strangled’', description: 'Body of Griselda Blanco, journalist who denounced alleged police abuses in Corrientes Province, found beaten and hanged at her home in Curuzú Cuatiá; Ex-partner arrested, but family members say death could be linked to previous reporting.', imageUrl: '/Images/ArticleImages/India.png', hyperlink: 'https://www.batimes.com.ar/news/argentina/corrientes-journalist-who-denounced-abuses-found-beaten-and-strangled.phtml' },
+
+            ],
+            'Colombia': [
+                { title: 'How Slain Colombian Journalist May Be Proved Right on Corruption Claims', description: 'Journalist Rafael Moreno knew his reports on corruption in Colombia made him vulnerable, and his grim prediction was proved right: A gunman killed him in October in Montelibano, Colombia. No arrests have been made.', imageUrl: '/Images/ArticleImages/India.png', hyperlink: 'https://www.voanews.com/a/how-slain-colombian-journalist-may-be-proved-right-on-corruption-claims/7318264.html' },
+
+            ],
+            'Venezuela': [
+                { title: 'Venezuelan journalist arrested by special forces following coronavirus coverage', description: ' Venezuelan authorities must immediately release journalist Darvinson Rojas and ensure that the media can cover the coronavirus outbreak in the country without fear of retribution, the Committee to Protect Journalists said today.', imageUrl: '/Images/ArticleImages/India.png', hyperlink: 'https://cpj.org/2020/03/venezuelan-journalist-arrested-by-special-forces-f/' },
+            ],
+            'Peru': [
+                { title: 'Peru’s former presidential candidate sentenced for journalist’s murder', description: 'Daniel Urresti sent to jail for 12 years for his role in the 1988 killing of Hugo Bustíos at the height of the country’s civil conflict', imageUrl: '/Images/ArticleImages/India.png', hyperlink: 'https://www.theguardian.com/world/2023/apr/13/peru-former-presidential-candidate-journalist-murder-jail' },
+
+            ],
+            'Nigeria': [
+                { title: 'Mass arrests target LGBTQ+ people in Nigeria while abuses against them are ignored, activists say', description: 'Law enforcement authorities in Nigeria are using the country’s same-sex prohibition law to target the LGBTQ+ community while ignoring abuses against them, rights groups and lawyers say, in the wake of fresh mass arrests of gay people.', imageUrl: '/Images/ArticleImages/India.png', hyperlink: 'https://apnews.com/article/lgbtq-arrests-homosexuality-nigeria-gay-rights-1f05b27f6cd2bb5bfb2319c90730f444' },
+
+            ],
+            'South Africa': [
+                { title: 'SANEF FINDS THE ARREST OF A JOURNALIST COVERING ELECTIONS IN SOWETO UNACCEPTABLE', description: 'The SA National Editors’ Forum (SANEF) notes with grave concern the heavy-handed actions of the South African Police Service who arrested Newzroom Afrika Journalist Ziniko kaMhlaba who was covering elections in Soweto.', imageUrl: '/Images/ArticleImages/India.png', hyperlink: 'https://sanef.org.za/sanef-finds-the-arrest-of-a-journalist-covering-elections-in-soweto-unacceptable/' },
+
+            ],
+            'Morocco': [
+                { title: 'Morocco arrests former human rights minister', description: 'Moroccan authorities have arrested the country’s former human rights minister Mohammed Ziane after a sentence he had previously been given was upheld by an appeals court.', imageUrl: '/Images/ArticleImages/India.png', hyperlink: 'https://www.aljazeera.com/news/2022/11/22/morocco-arrests-former-human-rights-minister' },
+
+            ],
+            'China': [
+                { title: 'Australian journalist Cheng Lei back home after 3 years detained in China', description: 'Former Chinese state TV anchor was imprisoned on murky charges of ‘supplying state secrets overseas’.', imageUrl: '/Images/ArticleImages/India.png', hyperlink: 'https://www.aljazeera.com/news/2023/10/11/australian-journalist-cheng-lei-back-home-after-3-years-detained-in-china' },
+
+            ],
+            'India': [
+                { title: 'Indian police arrest a news site’s editor and administrator after raiding homes of journalists', description: 'Police in New Delhi have arrested the editor of a news website and one of its administrators after raiding the homes of journalists working for the site, which has been critical of Prime Minister Narendra Modi and his Hindu nationalist-led government.', imageUrl: '/Images/ArticleImages/India.png', hyperlink: 'https://apnews.com/article/india-press-freedom-newsclick-arrest-raid-3faa0830e9f3bcd4e75f1b7df404f432' },
+
+            ],
+            'Indonesia': [
+                { title: 'US journalist who exposed ecological destruction in Indonesia arrested', description: 'Philip Jacobson, who exposed environmental destruction in Indonesia, has been detained in Borneo.', imageUrl: '/Images/ArticleImages/India.png', hyperlink: 'https://news.sky.com/story/us-journalist-who-exposed-ecological-destruction-in-indonesia-arrested-11915954#:~:text=An%20American%20journalist%20who%20exposed,the%20environmental%20science%20website%20Mongabay.' },
+
+            ],
+            'Thailand': [
+                { title: 'Journalist Duong Van Thai arrested in Vietnam after disappearing in Thailand', description: 'Vietnamese authorities should immediately release journalist Duong Van Thai and stop all efforts to harass and detain members of the press living in exile, the Committee to Protect Journalists said Tuesday.', imageUrl: '/Images/ArticleImages/India.png', hyperlink: 'https://cpj.org/2023/04/journalist-duong-van-thai-arrested-in-vietnam-after-disappearing-in-thailand/' },
+
+            ],
+            'United States': [
+                { title: 'An Alabama Newspaper Publisher and Reporter Are Arrested, Raising Alarms', description: 'The publisher of Atmore News in Atmore, Ala., and a reporter at the paper were charged with revealing grand jury evidence in an article published last month.', imageUrl: '/Images/ArticleImages/India.png', hyperlink: 'https://www.nytimes.com/2023/11/02/us/journalist-charged-atamore-alabama-grand-jury.html' },
+
+            ],
+            'Canada': [
+                { title: '‘I felt kidnapped’: Canada police sued for arresting photographer covering protest', description: 'Environmental publication the Narwhal argues Amber Bracken’s rights were violated for being detained while working', imageUrl: '/Images/ArticleImages/India.png', hyperlink: 'https://www.theguardian.com/world/2023/feb/13/royal-canadian-mounted-police-amber-bracken-arrest-lawsuit' },
+
+            ],
+            'Mexico': [
+                { title: 'Wauconda couple claims they were unfairly arrested, assaulted by police on Mexican vacation', description: 'A north suburban couple said their relaxing tropical vacation in Mexico ended in a jailhouse, on a dirt floor, in their swimsuits. The husband and wife said they were unfairly arrested and assaulted by Mexican police.', imageUrl: '/Images/ArticleImages/India.png', hyperlink: 'https://abc7chicago.com/mexico-vacation-playa-del-carmen-mexican-police-arrested-abroad/5472853/' },
+
+            ],
+            'Guatemala': [
+                { title: 'Guatemala arrests anti-corruption lawyer, prompting international outcry', description: 'The US has condemned the arrest of Claudia Gonzalez, a lawyer who worked with a UN-backed anti-corruption commission.', imageUrl: '/Images/ArticleImages/India.png', hyperlink: 'https://www.aljazeera.com/news/2023/8/29/guatemala-arrests-anti-corruption-lawyer-prompting-international-outcry' },
+
+            ],
+            'Panama': [
+                { title: 'Couple speaks out after wrongful arrest', description: 'Police got it wrong when they arrested a 73-year-old local man on charges that he forced a bingo-hall patron at knifepoint to hand over his winnings, the defendant in the case said in an interview Wednesday with The News Herald.', imageUrl: '/Images/ArticleImages/India.png', hyperlink: 'https://eu.newsherald.com/story/news/crime/2016/11/26/couple-speaks-out-after-wrongful-arrest/24465051007/' },
+
+            ],
+            'Australia': [
+                { title: 'Royal fan detained for 13 hours after \'wrongful arrest\' at King\'s coronation', description: 'Alice Chambers was an innocent bystander waiting to see the King drive past before being crowned at Westminster Abbey when she was arrested and locked up for the whole day.', imageUrl: '/Images/ArticleImages/India.png', hyperlink : 'https://news.sky.com/story/royal-fan-detained-for-13-hours-after-wrongful-arrest-at-kings-coronation-12878740' },
+
+            ],
+            'Papua New Guinea': [
+                { title: 'Papua New Guinea police arrest former PM Peter O\'Neill over alleged corruption', description: 'PNG police say O’Neill was arrested over the $14m purchase of two generators allegedly without parliamentary approval', imageUrl: '/Images/ArticleImages/India.png', hyperlink: 'https://www.theguardian.com/world/2020/may/24/papua-new-guinea-police-arrest-former-pm-peter-oneill-over-alleged-corruption' },
+
+            ],
+            'New Zealand': [
+                { title: 'Climate activist seeking compensation payout after wrongful arrest', description: 'A protester with the \'Restore Passenger Rail\' group that\'s notorious for disrupting traffic could get a compensation payout after being arrested for putting up posters.', imageUrl: '/Images/ArticleImages/India.png', hyperlink: 'https://www.rnz.co.nz/news/national/502332/climate-activist-seeking-compensation-payout-after-wrongful-arrest' },
+
+            ],
+            'Fiji': [
+                { title: 'Fiji court orders state to pay compensation for wrongful arrest', description: 'The Lautoka High Court has ordered the state to pay 30-thousand US dollars to a former trade unionist for wrongful arrest.', imageUrl: '/Images/ArticleImages/India.png', hyperlink: 'https://www.rnz.co.nz/international/pacific-news/168427/fiji-court-orders-state-to-pay-compensation-for-wrongful-arrest' },
+
+            ],
+            'Solomon Islands': [
+                { title: 'Police arrest man over Kukum petrol bomb incident', description: 'OFFICERS of the Royal Solomon Island Police Force (RSIPF) at the Honiara Central Police Station have arrested a male suspect in relation to the petrol bomb incident in Kukum recently.', imageUrl: '/Images/ArticleImages/India.png', hyperlink: 'https://www.solomonstarnews.com/police-arrest-man-over-kukum-petrol-bomb-incident/' },
             ],
         };
 
@@ -164,17 +293,53 @@
             articles.forEach(article => {
                 const articleDiv = document.createElement('div');
                 articleDiv.className = 'news-article';
-                articleDiv.innerHTML = `
-            <div class="article-content">
-                <h3 class="article-title">${article.title}</h3>
-                <p class="article-description">${article.description}</p>
-            </div>
-            <div class="article-image-container">
-                <img src="${article.imageUrl}" alt="Article Image" class="article-image">
-            </div>
+                const articleContent = `
+                <div class="article-content">
+                    <a class="article-title" href="${article.hyperlink}">${article.title}</a>
+                    <p class="article-description">${article.description}</p>
+                </div>
+
+            </a>
         `;
+                articleDiv.innerHTML = articleContent;
                 newsContainer.appendChild(articleDiv);
             });
+        }
+
+        function updateStatistics() {
+            var selectedProfession = document.getElementById('professionSelect').value;
+
+            var baseNumbers = {
+                arrests: 100,
+                strikes: 50,
+                safetyViolations: 30,
+                legalDisputes: 20,
+                politicalStability: 75
+            };
+
+            var professionNumbers = {
+                healthcare: 5,
+                it: 10,
+                education: 15,
+                engineering: 20,
+                finance: 25,
+                arts: 30,
+                law: 35,
+                sales: 40,
+                construction: 45,
+                service: 50
+            };
+
+            var professionNumber = professionNumbers[selectedProfession] || 0;
+
+            for (var key in baseNumbers) {
+                var element = document.getElementById(key);
+                if (element) {
+                    // Ensuring the random change is always positive or zero
+                    var randomChange = Math.floor(Math.random() * professionNumber);
+                    element.innerHTML = Math.max(baseNumbers[key] + randomChange, 0); // Preventing negative results
+                }
+            }
         }
     </script>
 </body>

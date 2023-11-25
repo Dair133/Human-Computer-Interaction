@@ -1,6 +1,7 @@
 .statisticsSection{
 
-    background-color: rgb(148, 148, 154);
+    background-color: rgb(0, 0, 0);
+    color: white;
     width: 20%;
     height: 85vh;
     float: left;
@@ -20,7 +21,7 @@ max-height: 100px; /* maximum height of the image */
     font-size: 20px;
 }
 .statisticHeading{
-    font-size:22px
+    font-size:22px;
 }
 
 .countryDetails{
